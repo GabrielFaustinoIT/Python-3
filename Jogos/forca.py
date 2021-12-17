@@ -5,8 +5,6 @@ def jogar():
     print("---------------------------------")
 
 
-
-
     arquivo = open("frutas.txt", "r")
     frutas = []
 
@@ -19,6 +17,7 @@ def jogar():
     arquivo.close()
 
     numero = random.randrange(0, len(frutas))
+
 
     arquivo_times = open("times.txt", "r")
     times = []
@@ -44,7 +43,6 @@ def jogar():
     elif (escolha == 2):
         palavra_secreta = times[numero_times].upper()
         letras_acertadas = ["_" for letra in palavra_secreta]
-
 
 
     enforcou = False
@@ -73,12 +71,38 @@ def jogar():
         acertou = "_" not in letras_acertadas
         print(letras_acertadas)
 
-
     if(acertou):
         imprime_mensagem_vencedor()
 
     elif(enforcou):
         imprime_mensagem_perdedor(palavra_secreta)
+
+    print("O que você deseja?")
+    print("(1) ADICIONAR PALAVRAS EM CATEGORIAS EXISTENTES")
+    print("(2) ADICIONAR UMA CATEGOIRA (4 PALAVRAS)")
+    print("(3) ENCERRAR")
+    opcao_final = int(input("ESCOLHA: "))
+
+    if(opcao_final == 1):
+
+        categoria_add = int(input("Escolha a categoria para ser adicionada a palavra ----- (1) FRUTAS  (2) TIMES  "))
+
+        if (categoria_add == 1):
+            adicionar_fruta()
+
+        elif(categoria_add == 2):
+            adicionar_times()
+
+    elif(opcao_final == 2):
+        criar_tema()
+
+    elif (opcao_final == 3):
+        print("Fim de jogo")
+
+
+
+
+
 
 
 def imprime_mensagem_perdedor(palavra_secreta):
@@ -164,6 +188,49 @@ def desenha_forca(erros):
     print(" |            ")
     print("_|___         ")
     print()
+
+
+def adicionar_fruta():
+
+        fruta_adicionada = input("Qual fruta deseja adicionar: ")
+
+        arquivo_addfrutas = open("frutas.txt", "a")
+
+        arquivo_addfrutas.write('\n')
+        arquivo_addfrutas.write(fruta_adicionada)
+
+        print("Você adicionou: {}".format(fruta_adicionada))
+
+        arquivo_addfrutas.close()
+
+def adicionar_times():
+
+        time_adicionado = input("Qual time deseja adicionar: ")
+
+        arquivo_addtimes = open("times.txt", "a")
+
+        arquivo_addtimes.write('\n')
+        arquivo_addtimes.write(time_adicionado)
+
+        print("Você adicionou: {}".format(time_adicionado))
+
+        arquivo_addtimes.close()
+
+def criar_tema():
+    nome_categoria = input("Digite o nome da categoria: ")
+
+    arquivo_novacategoria = open("{}.txt".format(nome_categoria), "w")
+
+    aux = 0
+
+    while (aux <= 3):
+        palavras_novotema = input("Digite a palavra: ")
+        arquivo_novacategoria.write(palavras_novotema)
+        arquivo_novacategoria.write('\n')
+
+        aux = aux + 1
+
+    print("Parabéns, você criou a categora {} ".format(nome_categoria))
 
 
 if (__name__ == "__main__"):
